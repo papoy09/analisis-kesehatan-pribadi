@@ -546,19 +546,18 @@ elif input_method == "Upload CSV":
 
                         import time
 
-                        # Convert hasil ke csv
+                        # convert dataframe ke csv bytes
                         csv_bytes = df.to_csv(index=False).encode("utf-8")
 
-                        # Nama file unik
+                        # nama file unik
                         file_name = f"{int(time.time())}_{uploaded.name}"
 
-                        # Upload ke Supabase Storage
+                        # upload ke supabase storage
                         supabase.storage.from_("csv-files").upload(
-                            file_name,
-                            csv_bytes,
-                            {
-                                "content-type": "text/csv",
-                                "upsert": "true"
+                            path=file_name,
+                            file=csv_bytes,
+                            file_options={
+                                "content-type": "text/csv"
                             }
                         )
 
