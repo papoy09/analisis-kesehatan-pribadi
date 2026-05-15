@@ -546,28 +546,8 @@ elif input_method == "Upload CSV":
 
                         import time
 
-                        # convert dataframe ke csv bytes
-                        csv_bytes = df.to_csv(index=False).encode("utf-8")
-
                         # nama file unik
-                        file_name = f"{int(time.time())}_{uploaded.name}"
-
-                        # upload ke supabase storage
-                        supabase.storage.from_("csv-files").upload(
-                            path=file_name,
-                            file=csv_bytes,
-                            file_options={
-                                "content-type": "text/csv"
-                            }
-                        )
-
-                        # simpan metadata file ke database
-                        supabase.table("uploaded-files").insert({
-                            "filename": file_name,
-                            "storage_path": f"csv-files/{file_name}"
-                        }).execute()
-
-                        st.success("File CSV berhasil disimpan ke Storage!")
+                        file_name = f"hasil_prediksi_{int(time.time())}.csv"
 
                     df_res = df.copy()
                     df_res["Heart_Disease_Risk"] = [label_mapping[p[0]] for p in preds]
@@ -581,6 +561,42 @@ elif input_method == "Upload CSV":
                         " | ".join(recs(label_mapping[p[0]], label_mapping[p[1]]))
                         for p in preds
                     ]
+
+                    # =========================
+                    # SIMPAN DATASET ASLI
+                    # =========================
+
+                    original_bytes = df.to_csv(index=False).encode("utf-8")
+
+                    original_file = uploaded.name
+
+                    supabase.storage.from_("csv-files").upload(
+                        path=original_file,
+                        file=original_bytes,
+                        file_options={
+                            "content-type": "text/csv"
+                        }
+                    )
+
+                    # convert dataframe hasil prediksi ke csv bytes
+                    csv_bytes = df_res.to_csv(index=False).encode("utf-8")
+
+                    # upload ke supabase storage
+                    supabase.storage.from_("csv-files").upload(
+                        path=file_name,
+                        file=csv_bytes,
+                        file_options={
+                            "content-type": "text/csv"
+                        }
+                    )
+
+                    # simpan metadata file ke database
+                    supabase.table("uploaded-files").insert({
+                        "filename": original_file,
+                        "storage_path": f"csv-files/{original_file}"
+                    }).execute()
+
+                    st.success("File CSV berhasil disimpan ke Storage!")
 
                     hc = df_res["Heart_Disease_Risk"].value_counts()
                     dc = df_res["Diabetes_Risk"].value_counts()
