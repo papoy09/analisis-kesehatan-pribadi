@@ -544,6 +544,26 @@ elif input_method == "Upload CSV":
                     with st.spinner("Memproses..."):
                         preds = model.predict(df[expected_columns])
 
+                        import time
+
+                        # Convert hasil ke csv
+                        csv_bytes = df.to_csv(index=False).encode("utf-8")
+
+                        # Nama file unik
+                        file_name = f"{int(time.time())}_{uploaded.name}"
+
+                        # Upload ke Supabase Storage
+                        supabase.storage.from_("csv-files").upload(
+                            file_name,
+                            csv_bytes,
+                            {
+                                "content-type": "text/csv",
+                                "upsert": "true"
+                            }
+                        )
+
+                        st.success("File CSV berhasil disimpan ke Storage!")
+
                     df_res = df.copy()
                     df_res["Heart_Disease_Risk"] = [label_mapping[p[0]] for p in preds]
                     df_res["Diabetes_Risk"]       = [label_mapping[p[1]] for p in preds]
