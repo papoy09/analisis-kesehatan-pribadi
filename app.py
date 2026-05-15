@@ -561,6 +561,12 @@ elif input_method == "Upload CSV":
                             }
                         )
 
+                        # simpan metadata file ke database
+                        supabase.table("uploaded-files").insert({
+                            "filename": file_name,
+                            "storage_path": f"csv-files/{file_name}"
+                        }).execute()
+
                         st.success("File CSV berhasil disimpan ke Storage!")
 
                     df_res = df.copy()
