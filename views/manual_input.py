@@ -299,6 +299,13 @@ def render_manual_input(model, model_choice, supabase):
                             "waist_circumference": st.session_state.basic_data[
                                 "Waist_Circumference"
                             ],
+                            "diet_type": st.session_state.basic_data["Diet_Type"],
+                            "anxiety_score": st.session_state.basic_data["Anxiety_Score"],
+                            "sleep_quality": st.session_state.basic_data["Sleep_Quality"],
+                            "depression_score": st.session_state.basic_data["Depression_Score"],
+                            "social_isolation_index": st.session_state.basic_data["Social_Isolation_Index"],
+                            "riwayat_jantung_keluarga": bool(st.session_state.basic_data["Family_History_CVD"]),
+                            "riwayat_diabetes_keluarga": bool(st.session_state.basic_data["Family_History_T2D"]),
                         }
                     ).execute()
 
@@ -317,6 +324,11 @@ def render_manual_input(model, model_choice, supabase):
                             "ldl": ldl,
                             "hdl": hdl,
                             "triglycerides": trig,
+                            "hrv": hrv,
+                            "prs_cardiometabolic": prs_c,
+                            "prs_type2diabetes": prs_d,
+                            "apoe_e4_carrier": bool(apoe),
+                            "brca_pathogenic_variant": bool(brca),
                         }
                     ).execute()
 
