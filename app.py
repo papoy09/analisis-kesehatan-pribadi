@@ -1,30 +1,5 @@
-from supabase import create_client
-from dotenv import load_dotenv
-
-from components.header import render_header
-from components.info_bar import render_info_bar
-from components.sidebar import *
-from components.bottom_section import render_buttom_section
-from components.footer import render_footer
-from assets.styles import *
-
-from config.constant import *
-from config.risk_config import *
-
-from models.model_loader import *
-
-from views.manual_input import *
-from views.upload_csv import *
-
 import os
 import streamlit as st
-
-load_dotenv()
-
-url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_KEY")
-
-supabase = create_client(url, key)
 
 # ==========================
 # PAGE CONFIG
@@ -36,6 +11,28 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+from supabase import create_client
+from dotenv import load_dotenv
+
+from components.header import render_header
+from components.info_bar import render_info_bar
+from components.sidebar import render_sidebar
+from components.bottom_section import render_buttom_section
+from components.footer import render_footer
+from assets.styles import load_css
+
+from models.model_loader import rf_model, xgb_model
+
+from views.manual_input import render_manual_input
+from views.upload_csv import render_upload_csv
+
+load_dotenv()
+
+url = os.getenv("SUPABASE_URL")
+key = os.getenv("SUPABASE_KEY")
+
+supabase = create_client(url, key)
 
 # ==========================
 # STYLE

@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-from utils.risk_helper import *
-from config.constant import *
+from utils.risk_helper import show_result_panel
+from config.constant import expected_columns, label_mapping
 
 # ==========================
 # MANUAL INPUT

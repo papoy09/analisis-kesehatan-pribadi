@@ -2,8 +2,9 @@ import streamlit as st
 import pandas as pd
 import time
 
-from config.constant import *
-from utils.risk_helper import *
+from config.constant import expected_columns, label_mapping
+from config.risk_config import RISK
+from utils.risk_helper import sentence, recs, show_result_panel
 
 # ==========================
 # CSV MODE

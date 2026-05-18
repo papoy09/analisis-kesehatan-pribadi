@@ -1,6 +1,6 @@
 import streamlit as st
 
-from config.risk_config import *
+from config.risk_config import RISK, RISK_TEXT
 
 # ==========================
 # RISK HELPERS
