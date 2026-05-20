@@ -18,8 +18,9 @@ def render_sidebar(rf_model, xgb_model):
         )
 
         st.markdown("### ⚙ Pengaturan Sistem")
-        model_choice = st.selectbox("Pilih Model", ["Random Forest", "XGBoost"])
-        model = rf_model if model_choice == "Random Forest" else xgb_model
+        
+        model_choice = st.selectbox("Pilih Model", ["Multivariate Random Forest", "XGBoost"])
+        model = rf_model if model_choice == "Multivariate Random Forest" else xgb_model
         input_method = st.radio("Mode Input", ["Isi Manual", "Upload CSV"])
 
         st.markdown("<br>", unsafe_allow_html=True)

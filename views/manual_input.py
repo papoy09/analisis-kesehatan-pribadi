@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+
 from utils.risk_helper import show_result_panel
 from config.constant import expected_columns, label_mapping
 
@@ -367,3 +368,15 @@ def render_manual_input(model, model_choice, supabase):
                         f"<div style='font-size:12px;font-weight:700;color:#1E293B;'>{val}</div></div>",
                         unsafe_allow_html=True,
                     )
+                full_data_export = {**bd, **med, "Heart_Disease_Risk": h_p, "Diabetes_Risk": d_p}
+                df_export = pd.DataFrame([full_data_export])
+                csv_bytes = df_export.to_csv(index=False).encode("utf-8")
+
+                st.markdown("<br>", unsafe_allow_html=True)
+                st.download_button(
+                    "⬇ Download Hasil CSV",
+                    csv_bytes,
+                    "hasil_prediksi.csv",
+                        "text/csv",
+                    use_container_width=True,
+                )
