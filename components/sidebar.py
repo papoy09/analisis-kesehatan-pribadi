@@ -18,8 +18,20 @@ def render_sidebar(rf_model, xgb_model):
         )
 
         st.markdown("### ⚙ Pengaturan Sistem")
+        st.markdown("""
+            <style>
+                div[data-baseweb="select"] input {
+                pointer-events: none !important;
+                caret-color: transparent !important;
+                }
+            </style>
+         """, unsafe_allow_html=True)
         
-        model_choice = st.selectbox("Pilih Model", ["Multivariate Random Forest", "XGBoost"])
+        model_choice = st.selectbox(
+            "Pilih Model",
+            ["Multivariate Random Forest", "XGBoost"],
+            accept_new_options=False,
+        )
         model = rf_model if model_choice == "Multivariate Random Forest" else xgb_model
         input_method = st.radio("Mode Input", ["Isi Manual", "Upload CSV"])
 
