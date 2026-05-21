@@ -6,7 +6,7 @@ def render_info_bar():
 
     with info1:
         st.markdown(
-            "<div class='metric-card'><div class='metric-title'>🧠 AI Engine</div><div class='metric-value'>2</div><span class='badge-success'>Random Forest + XGBoost</span></div>",
+            "<div class='metric-card'><div class='metric-title'>🧠 AI Engine</div><div class='metric-value'>2</div><span class='badge-success'>Multivariate Random Forest + XGBoost</span></div>",
             unsafe_allow_html=True,
         )
     with info2:
